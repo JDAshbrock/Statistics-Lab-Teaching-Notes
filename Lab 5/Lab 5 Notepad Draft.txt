@@ -1,0 +1,78 @@
+\section{introduction}
+After this week’s lab a student will:
+\begin{enumerate}
+\item Understand the idea of regression modelling
+\item Know how the least squares linear regression model is computed
+\item Know the meaning of each parameter in the least squares method and what the $R^2$ value means
+\item Be able to set up and plot linear regressions in \textbf{R}
+\end{enumerate}
+
+\section{Regression Modelling}
+
+There are two general types of analysis that one can do with data. The first is analyzing past data for the purposes of making conclusions about the underlying phenomenon. This will be covered in the hypothesis testing portion of this course. The second is using a sample of past events to make predictions about the future. This is the idea of modelling and will be the topic for the next few labs. 
+
+In this type of modelling we try to predict an unobserved quantity with an observed quantity. As an example from the previous lab, we might be interested in predicting the military size of the countries where the data was missing by using the population of those countries. To do this prediction, we assume that the relationship between military size and population is the same for countries where the data is available as for coutnries where the data is unavailable. 
+
+To have one variable "predict" another variable, we usually try to represent the variable we are trying to predict (which we call the dependent variable) as a function of the variable we are using to do the prediction (called the independent variable). There are many typs of functions that a data may be well represented by. In this lab we are finding "a line of best fit" to our data observations. That is, we are predicting that there is a linear relationship between our independent and dependent variables and then we try to find that relationship. In future labs we will explore how to do modelling when we think our data has a polynomial, exponential, or other type of relationship.
+
+In general, we could try to use any quantity to attempt to predict another quantity. However the relationship is not always as strong as we might like it to be. For instance, if we tried to use land area of a coutnry to predict military size, there surely would not be as strong of a relationship as there is between population and military size. So in addition to figuring out how one quantity should affect our prediction of another, we are also interested in calculating in some way how strong of a predictor this variable is. 
+
+Lastly, it might be benefcial to understand why the model is called a \textit{regression} model. 
+
+
+\section{The least squares regression model}
+Note that this section only exists to form a well-educated student of statistics. While it is necessary to know what the least squares regression model actually is, the precise mathematical notions are not as important. 
+
+The simplest type of functional relationship we could hope for between two sets of data is a linear relationship. That is, we can model the dependent variable, $y$, as a linear function of the independent variable, $x$. The question is, what slope and what y-intercept shall we choose for our line? Intuitively we wish to do this by minimizing the distance between our line and our sample points. To formally describe this, we need to define mathematical notation. 
+
+Let $\{(x_i,y_i)\}_{i=1}^n$ be a set of points in the cartesian plane (which may be interpreted as a sample of points on a scatter plot). Now suppose we have a line $y=\beta_1 x + \beta_0$. For each point $x_i$ in our sample, the point on the line at the value of $x_i$ is given by $\beta_1x_i + \beta_0$. However, we know the true value of our function at this point to be $y_i$. Therefore, we can define the difference between this true value $y_i$ and the predicted value $\beta_1 x_i + \beta_0$. Intuitively, we wish to minimize this error, summed over all points $x_i$ to pick the "best line" to fit our obsrved data. For the ease and accuracy of mathematical analysis, we actually choose to minimize the squared error $(y_i -(\beta_1x + \beta_0))^2$ for each point. This is exactly why the method introduced today is called the least squares regression model. The problem can be stated formally as \begin{align*}
+\text{Choose the values of $\beta_0, \beta_1$ so that the quantity } \\
+\sum_{i=1}^n (y_i - (\beta_1 x_i + \beta_0)^2 \text{ is miniimized}
+\end{align*}
+
+There are a variety of mathematical ways to do this analysis in general, however there is a specific algorithm to compute this minimum in the case of least squares regression lines. One important thing is that, as long as we have more than one sample, there is a unique (exactly one) line which will minimize the square error for a sample. 
+
+\section{Interpretation of the Least Squares Model}
+
+Suppose we have a sample $\{(x_i,y_i)\}_{i=1}^n$ of points in the plane and a least squares model \begin{align*}
+y = \beta_1 x +\beta_0
+\end{align*}
+Typically along with such a model, an analysis will provide an $r^2$ value associated to the model. In this section we will explain what the parameters $\beta_1, \beta_0, $ and $r^2$ mean in relation to the model. 
+
+\subsection{The $r^2$ statistic}
+The $r^2$ statistic is perhaps the most important value in determining how good our model is at prediction. The $r^2$ value is also referred to as the coefficient of determination. The $r^2$ statistic can take any value between $0$ and $1$. Values near $1$ indicate a strong linear relationship while values close to $0$ indicate lack of a linear relationship between two variables. On an intuitive level, the $r^2$ statistic tells you how good your regression line will be at predicting data. 
+
+Before giving the definition of this statistic, I will give an example. Suppose we wanted to plot the size of a person's hands against their height. People who are taller will tend to have larger hands on the average. However, if I tell you that two people are the exact same height, this does not mean that those two people will always have the exact same hand sizes. This is because, even though there is some relationship between height and hand size, hand size is not a function of height. 
+
+However consider the following game between two people. Two people will predict whether or not a person has hand size larger than some value. Player A makes the guess with no information about the person. Player B is told the height of the person. Even though there is variability even within people of the same height, we expect player B to win this game more often than not. 
+
+Mathematically, the $r^2$ statistic has a precise definition related to the above thought experiment. If I have a sample of data $\{(x_i,y_i)\}_{i=1}^n$ and I just look at the values $\{y_i\}_{i=1}^n$, I can computer the mean and the variance of this distribution. However if I only look at the $y-$values of points who have $x-$ close $x$ values I can compute the variance of this distribution. The definition, then of $r^2$ is this: $r^2$ measures the percentage of the variability in $y$ which is attributable to the variability in $x$. Said another way, it is expected amount that $y$ can vary for a specific $x$ value divided by the total amount that $y$ can vary. Said a third way, it measures how much extra confidence we get in predicting $y$ when knowing $x$ versus predicting $y$ without $x$. 
+
+\subsection{$\beta_1$, $\beta_0$} 
+
+The parameter $\beta_1$ is the computed slope of the least squares regression line. While the $r^2$ value tells us how \textit{good} the model is, the parameter $\beta_1$ tells us how much $y$ increases when $x$ increases. 
+
+The parameter $\beta_0$ is the $y-$intercept of the model. Statistically, this number is the expected $y-$value when the $x-$ value is $0$. Often times this does not have a meaningful physical interpretation, but sometimes it does. This will become clearer when we do an example in the following subsection.
+
+\section{An example of LSRL with Interpretation}
+As we saw with the previous assignment, there is not a very strong relationship between the population and the military size of the countries for which the data is available. In fact, if you run an LSRL (least squares regression line) analysis on the data set, the coeficient of determination ($r^2$) is only $0.203$. This tells us that if we look at the distribution of military sizes and the variance of this sample, only about $20%$ of the variance can be explained as being due to the different sizes of the country. If I remove some outliers, the coefficient of determination increase to $0.389$, which is still quite a small value. From that we can conclude that the relationship between military size and population is not in a linear relationship. 
+
+If we look at the relationship between the GDP of a country and the amount of electricty (in kWh/person) that the country uses, there is a stronger linear relationship. he equation for the LSRL is $y = 1020.25 + 0.1892x$ with $r^2=0.700$. The interperatation for this model is as follows. About $70%$ of the variation in how much electricty a country uses can be explained away by looking at the coutnries GDP. Only $30% of the total variance in electricity usage varies once we control for GDP. The slope of the regression line is $0.1892$ which tells us that an increase by $1$ USD in GDP corresponds to an expected increase in 0.1892 kWh of electricty usage per person per year. The y-intercept is fairly meaningless in this model, it tells us that if a country would have $0$ USD GDP then their expected electricty usage would be 1020 kwH per person per year. 
+
+\section{LSRL in \textbf{R}}
+There are three functions which are used in computing and plotting least squares regression lines in \textbf{R}. The first is the function "lm" which we will be using over the next few weeks as it allows us to fit more than just regression lines to our data. The second is the "cor" function which outputs the coefficient of determination between two lists. The third is "abline" which lets us plot lines on a scatter plot.
+\subsection{lm}
+The lm function accepts many parameters as input, however for our cases we only really need to use two of them. In general, when we pass inputs (arguments) to functions, we just need to specify them in the correct order. However, if we know the name of the parameter we can specify that value by $parameter = value$ where parameter is the name of the input and value is what we want to set it equal to. The two parameters we need to specify in the $lm$ function are "formula" and "data". The "formula" parameters tells us what form we want our output to look like. The second, "data", is a data frame containing the data (remember you can turn two lists into a data frame using data.frame(list1,list2)). "formula" is an object that explains what kind of relationship we want. If the name of the columns in our data frame are list1 and list2 and we want a formula explaining list1 as a linear function of list2 we specify that "formula = list1 ~ list2". All together this code could look like: 
+\begin{algorithm}[h]\begin{algorithmic}
+\STATE dataset <- data.frame(list1,list2)
+\STATE lm(formula = list1 ~ list2, data = datset)
+\end{algorithmic}\end{algorithm}
+
+\subsection{cor}
+The cor function accepts two lists as inputs and outputs the coefficient of determination when a least squares model is fit on the two lists.
+
+\subsection{abline}
+After plotting the scatterplot of our data we can use the "abline" function to draw the regression line. We must specify two parameters to this function. The first is the y-intercept of the line and the second is the slope of the line. These numbers will be computed by the lm function. 
+
+
+
